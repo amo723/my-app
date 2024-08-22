@@ -143,6 +143,8 @@ export default function NewRecolte() {
               placeholder="Saisir vos observations"
               value={obs}
               onChangeText={setObs}
+              multiline={true}
+              numberOfLines={4}
             />
           </View>
           <TouchableOpacity

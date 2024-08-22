@@ -33,14 +33,13 @@ type ItemType = {
   libelle: any;
 };
 
-export default function Recolte() {
-  const [recoltes, setRecoltes] = useState<ItemType[]>([]);
+export default function Traitement() {
+  const [typeLoges, setTypeLoges] = useState<ItemType[]>([]);
   const [data, setData] = useState([]); // État pour stocker les données
   const [loading, setLoading] = useState(true); // État pour gérer le chargement
 
   const handleModify = (item: any) => {
     console.log("Modifier l'élément");
-    router.replace("/modal");
   };
 
   const handleDelete = (item: any) => {
@@ -51,18 +50,17 @@ export default function Recolte() {
     const types: any = [];
     const func = async () => {
       await api
-        .get(`recolte`)
+        .get(`typeLoge`)
         .then(function (response) {
           if (response.status === 200) {
             const data = response.data.results;
             data.map((item: any) => {
-              console.log(item);
               types.push({
                 id: item.id,
-                libelle: item.nbrePonte,
+                libelle: item.surface,
               });
             });
-            setRecoltes(types);
+            setTypeLoges(types);
           }
         })
         .catch(function (error) {
@@ -86,7 +84,7 @@ export default function Recolte() {
               marginVertical: Spacing,
             }}
           >
-            Récoltes
+            Traitements
           </Text>
         </View>
       </View>
@@ -99,7 +97,7 @@ export default function Recolte() {
           }}
         >
           <TouchableOpacity
-            onPress={() => router.push("/screens/newRecolte")}
+            onPress={() => router.push("/screens/newTypeLoge")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -116,7 +114,7 @@ export default function Recolte() {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={recoltes}
+          data={typeLoges}
           contentContainerStyle={{
             padding: SPACING,
             paddingTop: StatusBar.currentHeight || 42,

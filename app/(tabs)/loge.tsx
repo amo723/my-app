@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from "@/constants/api";
 import { Button } from "react-native-elements";
 import Colors from "@/constants/Colors";
@@ -36,14 +36,6 @@ type ItemType = {
 export default function LogeScreen() {
   const [loges, setLoges] = useState<ItemType[]>([]);
   const [data, setData] = useState([]);
-
-  const handleModify = (item: any) => {
-    console.log("Modifier l'élément");
-  };
-
-  const handleDelete = (item: any) => {
-    console.log("Supprimer l'élément");
-  };
 
   useEffect(() => {
     const types: any = [];
@@ -70,6 +62,32 @@ export default function LogeScreen() {
 
     return () => {};
   }, []);
+
+  // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
+  const deleteItem = useCallback(
+    async (element: any) => {
+      console.log("Supprimer l'élément");
+      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
+        await api
+          .delete(`loge/delete/${element.id}`)
+          .then((response) => {
+            if (response.status === 204) {
+              setLoges((prevItems) =>
+                prevItems.filter((item) => item.id !== element.id)
+              );
+              alert("Loge supprimée avec succes");
+            } else {
+              alert("Erreur lors de la suppression de la loge");
+              return;
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+    [setLoges]
+  );
 
   return (
     <ProtectedRoute>
@@ -139,6 +157,7 @@ export default function LogeScreen() {
         </View>
         <FlatList
           data={loges}
+          extraData={loges}
           contentContainerStyle={{
             padding: SPACING,
             paddingTop: StatusBar.currentHeight || 42,
@@ -166,15 +185,15 @@ export default function LogeScreen() {
                 </Text>
               </View>
               <View style={{ flexDirection: "row" }}>
-                <Ionicons
-                  name="create"
-                  size={25}
-                  onPress={() => handleModify(item)}
-                />
+                <Link href={`/updateModal/${item}`} asChild>
+                  <TouchableOpacity>
+                    <Ionicons name="create" size={25} asChild />
+                  </TouchableOpacity>
+                </Link>
                 <Ionicons
                   name="trash"
                   size={25}
-                  onPress={() => handleDelete(item)}
+                  onPress={() => deleteItem(item)}
                 />
               </View>
             </View>

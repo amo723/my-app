@@ -72,7 +72,7 @@ export default function Others() {
           }}
         >
           <TouchableOpacity
-            onPress={() => router.push("/screens/typeLoge")}
+            onPress={() => router.push("/screens/mutation")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -97,7 +97,7 @@ export default function Others() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => router.push("/screens/typeLoge")}
+            onPress={() => router.push("/screens/transfert")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -131,7 +131,7 @@ export default function Others() {
           }}
         >
           <TouchableOpacity
-            onPress={() => router.push("/screens/typeLoge")}
+            onPress={() => router.push("/screens/anomalie")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -156,7 +156,7 @@ export default function Others() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => router.push("/screens/typeLoge")}
+            onPress={() => router.push("/screens/traitement")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
