@@ -8,10 +8,12 @@
       "distribution": "internal",
       "env": {
         "NODE_ENV": "development"
-      }
+      },
+      "image": "ghcr.io/expo/expo-docker:latest"  // Spécifie l'image Docker à utiliser pour les builds
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "image": "ghcr.io/expo/expo-docker:latest"  // Spécifie l'image Docker à utiliser pour les builds
     },
     "production": {
       "android": {
@@ -19,7 +21,8 @@
       },
       "env": {
         "NODE_ENV": "production"
-      }
+      },
+      "image": "ghcr.io/expo/expo-docker:latest"  // Spécifie l'image Docker à utiliser pour les builds
     }
   },
   "submit": {
