@@ -46,7 +46,7 @@ export default function LogeScreen() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("http://kerneltech.cloud/loge", {
+        const response = await fetch("https://kerneltech.cloud/loge", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -70,7 +70,6 @@ export default function LogeScreen() {
     // Exemple d'appel de la fonction
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
-      console.log("ddddd", data);
       data.results.map((item: any) => {
         types.push({
           id: item.id,
