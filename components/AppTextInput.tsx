@@ -1,12 +1,13 @@
 import { View, Text, TextInput, TextInputProps } from "react-native";
 import React, { useState } from "react";
-import Colors from "@/constants/Colors";
 import Font from "@/constants/Font";
 import FontSize from "@/constants/FontSize";
 import Spacing from "@/constants/Spacing";
+import { Colors } from "@/constants/Colors";
 
 const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
   const [focused, setFocused] = useState(false);
+  otherProps = otherProps || "";
   return (
     <TextInput
       onFocus={() => setFocused(true)}
@@ -21,7 +22,6 @@ const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
           backgroundColor: Colors.lightPrimary,
           borderRadius: Spacing,
           marginVertical: Spacing,
-          textAlignVertical: "top",
         },
         focused && {
           borderWidth: 2,

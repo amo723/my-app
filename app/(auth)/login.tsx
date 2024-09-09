@@ -1,4 +1,5 @@
 import {
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -81,7 +82,7 @@ export default function LoginScreen() {
             Forgot your password ?
           </Text>
         </View>
-        <TouchableOpacity
+        <Pressable
           onPress={handleLogin}
           style={{
             padding: Spacing * 2,
@@ -104,8 +105,8 @@ export default function LoginScreen() {
           >
             Se connecter
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
           style={{ padding: Spacing }}
           onPress={() => router.push("/register")}
         >
@@ -119,7 +120,7 @@ export default function LoginScreen() {
           >
             Creer un nouveau compte
           </Text>
-        </TouchableOpacity>
+        </Pressable>
         <View style={{ marginVertical: Spacing * 3 }}>
           <Text
             style={{

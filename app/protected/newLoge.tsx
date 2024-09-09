@@ -1,54 +1,43 @@
 // app/(tabs)/profile.tsx
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Pressable } from "react-native";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
 import { Button, CheckBox } from "react-native-elements";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
-import Colors from "@/constants/Colors";
 import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
-import SelectDropdown from "react-native-select-dropdown";
-import { Ionicons } from "@expo/vector-icons";
-import RNPickerSelect from "react-native-picker-select";
+import AppSelectComponent from "@/components/AppSelect";
+import { Colors } from "@/constants/Colors";
 
-export default function NewSujet() {
-  const [surface, setSurface] = useState("");
-  const [capaciteMax, setCapaciteMax] = useState("");
+interface Data {
+  label: string;
+  value: string;
+}
 
-  const [loges, setLoges] = useState([]);
+export default function NewTypeLoge() {
+  const [data, setData] = useState<Data[]>([]);
   const [type, setType] = useState("");
-  const [idLoge, setIdLoge] = useState("");
-  const [typeEntree, setTypeEntree] = useState("");
   const [libelle, setLibelle] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
-    const types: any = [];
+    const types: Data[] = [];
     const func = async () => {
       await api
-        .get(`loge`)
+        .get(`typeLoge`)
         .then(function (response) {
           if (response.status === 200) {
             const data = response.data.results;
             data.map((item: any) => {
-              console.log(item);
               types.push({
                 value: item.id,
-                label: item.libelle,
+                label: item.surface,
               });
             });
-            setLoges(types);
+            setData(types);
           }
         })
         .catch(function (error) {
@@ -64,20 +53,26 @@ export default function NewSujet() {
     setIsSelected(!isSelected);
   };
 
+  const handleTypeChange = (itemValue: string) => {
+    console.log(itemValue);
+    setType(itemValue);
+  };
+
   const handleClick = async () => {
     await api
-      .post(`sujet/new`, {
-        id_loge: idLoge,
-        type_entree: typeEntree,
-        date_entree_sujet: new Date(),
+      .post(`loge/new`, {
+        typeLoge: type,
+        libelle: libelle,
+        active: isSelected,
+        date_activation_desactivation: new Date(),
       })
       .then((response) => {
         if (response.status === 201) {
-          alert("Nouveau sujet ajouté avec succes");
-          router.replace("/sujet");
+          alert("Loge enregistree avec succes");
+          router.replace("/loge");
         }
         if (response.status === 202) {
-          alert(`Ce sujet existe deja`);
+          alert(`Cette loge existe deja`);
           return;
         }
       })
@@ -87,7 +82,7 @@ export default function NewSujet() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
       <SafeAreaView>
         <View style={{ padding: Spacing * 2 }}>
           <View style={{ alignItems: "center" }}>
@@ -99,52 +94,42 @@ export default function NewSujet() {
                 marginVertical: Spacing * 3,
               }}
             >
-              Nouveau sujet
+              Nouvelle loge
             </Text>
           </View>
-          <View>
-            <Text
-              style={{
-                fontFamily: Font["poppins-bold"],
-                marginVertical: 20,
-                fontWeight: 700,
-                fontSize: 16,
-              }}
-            >
-              Loge
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
+              Type de loge
             </Text>
-            <RNPickerSelect
-              onValueChange={(value) => setIdLoge(value)}
-              items={loges}
-              style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
-              placeholder={{
-                label: "Sélectionner une loge...",
-                value: null,
-              }}
+            <AppSelectComponent
+              data={data}
+              selectedValue={type}
+              onValueChange={handleTypeChange}
             />
           </View>
           <View>
-            <Text
+            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
+              Libellé
+            </Text>
+            <AppTextInput
+              value={libelle}
+              onChangeText={setLibelle}
+              placeholder="Saisir le libelle"
+            />
+            <View
               style={{
-                fontFamily: Font["poppins-bold"],
-                marginVertical: 20,
-                fontWeight: 700,
-                fontSize: 16,
+                flexDirection: "row",
+                justifyContent: "flex-start",
               }}
             >
-              Type d'entrée
-            </Text>
-            <RNPickerSelect
-              onValueChange={(value) => setTypeEntree(value)}
-              items={[
-                { label: "Achat", value: "0" },
-                { label: "Eclosion", value: "1" },
-                { label: "Mutation", value: "2" },
-              ]}
-            />
+              <CheckBox
+                title="Activer la loge?"
+                checked={isSelected}
+                onPress={toggleCheckbox}
+              />
+            </View>
           </View>
-          <TouchableOpacity
+          <Pressable
             onPress={handleClick}
             style={{
               padding: Spacing * 2,
@@ -167,10 +152,10 @@ export default function NewSujet() {
             >
               Enregistrer
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </SafeAreaView>
-    </ProtectedRoute>
+    </>
   );
 }
 
@@ -241,6 +226,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  picker: {
+    width: "100%",
+    padding: Spacing,
+    fontFamily: Font["poppins-regular"],
+    fontSize: FontSize.small,
+    backgroundColor: Colors.lightPrimary,
+    borderRadius: Spacing,
+    marginVertical: Spacing,
+    textAlignVertical: "top",
+  },
+  item: {
+    fontSize: 18,
+    color: "black",
   },
 });
 

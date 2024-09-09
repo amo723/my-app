@@ -4,33 +4,47 @@
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true
+    "updates": {
+      "fallbackToCacheTimeout": 0
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.madibacorp.madiba"
     },
     "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.madibacorp.madiba",
+      "permissions": [
+        "INTERNET"
+      ],
+      "versionCode": 1
+    },
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#ffffff"
     },
     "plugins": [
-      "expo-router"
+      "expo-secure-store"
     ],
-    "experiments": {
-      "typedRoutes": true
+    "network": {
+      "allowExternalNetworking": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "defac88a-49ac-4dd4-8e6c-c4c40507fca2"
+      }
     }
   }
 }

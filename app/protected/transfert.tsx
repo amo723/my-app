@@ -10,17 +10,16 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
-import { Button } from "react-native-elements";
-import Colors from "@/constants/Colors";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
+import { Colors } from "@/constants/Colors";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -73,7 +72,7 @@ export default function Transfert() {
   }, []);
 
   return (
-    <ProtectedRoute>
+    <>
       <View>
         <View style={{ alignItems: "center" }}>
           <Text
@@ -96,8 +95,8 @@ export default function Transfert() {
             margin: 20,
           }}
         >
-          <TouchableOpacity
-            onPress={() => router.push("/screens/newTypeLoge")}
+          <Pressable
+            onPress={() => router.push("/protected/newTypeLoge")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -111,7 +110,7 @@ export default function Transfert() {
             }}
           >
             <Ionicons name="add" size={30} color={"white"} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <FlatList
           data={typeLoges}
@@ -158,7 +157,7 @@ export default function Transfert() {
           keyExtractor={(item) => item.id}
         />
       </View>
-    </ProtectedRoute>
+    </>
   );
 }
 

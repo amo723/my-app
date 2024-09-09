@@ -10,17 +10,16 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
-import { Button } from "react-native-elements";
-import Colors from "@/constants/Colors";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
+import { Colors } from "@/constants/Colors";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -33,7 +32,7 @@ type ItemType = {
   libelle: any;
 };
 
-export default function Anomalie() {
+export default function Traitement() {
   const [typeLoges, setTypeLoges] = useState<ItemType[]>([]);
   const [data, setData] = useState([]); // État pour stocker les données
   const [loading, setLoading] = useState(true); // État pour gérer le chargement
@@ -73,7 +72,7 @@ export default function Anomalie() {
   }, []);
 
   return (
-    <ProtectedRoute>
+    <>
       <View>
         <View style={{ alignItems: "center" }}>
           <Text
@@ -84,7 +83,7 @@ export default function Anomalie() {
               marginVertical: Spacing,
             }}
           >
-            Anomalies
+            Traitements
           </Text>
         </View>
       </View>
@@ -96,8 +95,8 @@ export default function Anomalie() {
             margin: 20,
           }}
         >
-          <TouchableOpacity
-            onPress={() => router.push("/screens/newTypeLoge")}
+          <Pressable
+            onPress={() => router.push("/protected/newTypeLoge")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -111,7 +110,7 @@ export default function Anomalie() {
             }}
           >
             <Ionicons name="add" size={30} color={"white"} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <FlatList
           data={typeLoges}
@@ -158,7 +157,7 @@ export default function Anomalie() {
           keyExtractor={(item) => item.id}
         />
       </View>
-    </ProtectedRoute>
+    </>
   );
 }
 

@@ -7,17 +7,17 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import api from "@/constants/api";
 import { Button } from "react-native-elements";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
-import Colors from "@/constants/Colors";
 import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
+import { Colors } from "@/constants/Colors";
 
 export default function NewTypeLoge() {
   const [surface, setSurface] = useState("");
@@ -32,6 +32,7 @@ export default function NewTypeLoge() {
       .then((response) => {
         if (response.status === 201) {
           alert("Type de loge enregistre avec succes");
+          router.replace("/protected/typeLoge");
         }
         if (response.status === 202) {
           alert(`Le type de loge avec pour surface ${surface} existe deja`);
@@ -44,7 +45,7 @@ export default function NewTypeLoge() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
       <SafeAreaView>
         <View style={{ padding: Spacing * 2 }}>
           <View style={{ alignItems: "center" }}>
@@ -77,7 +78,7 @@ export default function NewTypeLoge() {
               onChangeText={setCapaciteMax}
             />
           </View>
-          <TouchableOpacity
+          <Pressable
             onPress={handleClick}
             style={{
               padding: Spacing * 2,
@@ -100,10 +101,10 @@ export default function NewTypeLoge() {
             >
               Enregistrer
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </SafeAreaView>
-    </ProtectedRoute>
+    </>
   );
 }
 

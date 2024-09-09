@@ -7,33 +7,35 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
-import Colors from "@/constants/Colors";
 import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
-import RNPickerSelect from "react-native-picker-select";
-import { CheckIcon, Select } from "native-base";
+import AppSelectComponent from "@/components/AppSelect";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+
+interface Data {
+  label: string;
+  value: string;
+}
 
 export default function NewRecolte() {
   const [surface, setSurface] = useState("");
   const [capaciteMax, setCapaciteMax] = useState("");
 
-  const [loges, setLoges] = useState([]);
-  const [service, setService] = useState("");
-  const [type, setType] = useState("");
+  const [data, setData] = useState<Data[]>([]);
   const [idLoge, setIdLoge] = useState("");
   const [nbrePonte, setNbrePonte] = useState("");
   const [obs, setObs] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
-    const types: any = [];
+    const types: Data[] = [];
     const func = async () => {
       await api
         .get(`loge`)
@@ -47,7 +49,7 @@ export default function NewRecolte() {
                 label: item.libelle,
               });
             });
-            setLoges(types);
+            setData(types);
           }
         })
         .catch(function (error) {
@@ -58,6 +60,11 @@ export default function NewRecolte() {
 
     return () => {};
   }, []);
+
+  const handleLogeChange = (itemValue: string) => {
+    console.log(itemValue);
+    setIdLoge(itemValue);
+  };
 
   const toggleCheckbox = () => {
     setIsSelected(!isSelected);
@@ -87,7 +94,7 @@ export default function NewRecolte() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
       <SafeAreaView>
         <View style={{ padding: Spacing * 2 }}>
           <View style={{ alignItems: "center" }}>
@@ -114,15 +121,10 @@ export default function NewRecolte() {
               Loge
             </Text>
 
-            <RNPickerSelect
-              onValueChange={(value) => setIdLoge(value)}
-              items={loges}
-              style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
-              placeholder={{
-                label: "Sélectionner une loge...",
-                value: null,
-              }}
+            <AppSelectComponent
+              data={data}
+              selectedValue={idLoge}
+              onValueChange={handleLogeChange}
             />
           </View>
           <View>
@@ -147,7 +149,7 @@ export default function NewRecolte() {
               numberOfLines={4}
             />
           </View>
-          <TouchableOpacity
+          <Pressable
             onPress={handleClick}
             style={{
               padding: Spacing * 2,
@@ -170,10 +172,10 @@ export default function NewRecolte() {
             >
               Enregistrer
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </SafeAreaView>
-    </ProtectedRoute>
+    </>
   );
 }
 

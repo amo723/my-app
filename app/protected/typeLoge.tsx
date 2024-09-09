@@ -10,17 +10,17 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
+  Alert,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from "@/constants/api";
-import { Button } from "react-native-elements";
-import Colors from "@/constants/Colors";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
-import { ProtectedRoute } from "@/context/ProtectedRoute";
+import { Colors } from "@/constants/Colors";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -42,38 +42,77 @@ export default function TypeLoge() {
     console.log("Modifier l'élément");
   };
 
-  const handleDelete = (item: any) => {
-    console.log("Supprimer l'élément");
-  };
-
   useEffect(() => {
     const types: any = [];
-    const func = async () => {
-      await api
-        .get(`typeLoge`)
-        .then(function (response) {
-          if (response.status === 200) {
-            const data = response.data.results;
-            data.map((item: any) => {
-              types.push({
-                id: item.id,
-                libelle: item.surface,
-              });
-            });
-            setTypeLoges(types);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
+
+    async function fetchData() {
+      let apiData: any = null;
+
+      try {
+        const response = await fetch("http://kerneltech.cloud/typeLoge", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Ajouter d'autres en-têtes si nécessaire
+          },
         });
-    };
-    func();
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        apiData = await response.json(); // Stocker les données dans la variable
+        console.log(apiData); // Vous pouvez utiliser les données ici
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
+      return apiData;
+    }
+
+    // Exemple d'appel de la fonction
+    fetchData().then((data) => {
+      // Vous pouvez utiliser 'data' ici si nécessaire
+      console.log("ddddd", data);
+      data.results.map((item: any) => {
+        types.push({
+          id: item.id,
+          libelle: item.surface,
+        });
+      });
+      setTypeLoges(types);
+    });
 
     return () => {};
   }, []);
 
+  // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
+  const deleteItem = useCallback(
+    async (element: any) => {
+      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
+        await api
+          .delete(`typeLoge/delete/${element.id}`)
+          .then((response) => {
+            if (response.status === 204) {
+              setTypeLoges((prevItems) =>
+                prevItems.filter((item) => item.id !== element.id)
+              );
+              Alert.alert("Type de loge supprimé avec succes");
+            } else {
+              Alert.alert("Erreur lors de la suppression du type de loge");
+              return;
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+    [setTypeLoges]
+  );
+
   return (
-    <ProtectedRoute>
+    <>
       <View>
         <View style={{ alignItems: "center" }}>
           <Text
@@ -96,8 +135,8 @@ export default function TypeLoge() {
             margin: 20,
           }}
         >
-          <TouchableOpacity
-            onPress={() => router.push("/screens/newTypeLoge")}
+          <Pressable
+            onPress={() => router.push("/protected/newTypeLoge")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -111,7 +150,7 @@ export default function TypeLoge() {
             }}
           >
             <Ionicons name="add" size={30} color={"white"} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <FlatList
           data={typeLoges}
@@ -150,7 +189,7 @@ export default function TypeLoge() {
                 <Ionicons
                   name="trash"
                   size={25}
-                  onPress={() => handleDelete(item)}
+                  onPress={() => deleteItem(item)}
                 />
               </View>
             </View>
@@ -158,7 +197,7 @@ export default function TypeLoge() {
           keyExtractor={(item) => item.id}
         />
       </View>
-    </ProtectedRoute>
+    </>
   );
 }
 

@@ -1,0 +1,8 @@
+MON LIEN APK OU AAB
+
+Using Keystore from configuration: Build Credentials Qw5CPq4c_q (default)
+
+Build details: https://expo.dev/accounts/amo237/projects/my-app/builds/2fe9b42c-8bf0-48b3-8b34-870f1d3d4412
+
+🤖 Android app:
+https://expo.dev/artifacts/eas/71Scf1ynYUoErj1SEhv4Yi.apk

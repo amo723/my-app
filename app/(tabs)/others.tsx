@@ -10,17 +10,17 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
-import { Button } from "react-native-elements";
-import Colors from "@/constants/Colors";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
 import { ProtectedRoute } from "@/context/ProtectedRoute";
+import { Colors } from "@/constants/Colors";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -47,7 +47,7 @@ export default function Others() {
   };
 
   return (
-    <ProtectedRoute>
+    <>
       <View>
         <View style={{ alignItems: "center" }}>
           <Text
@@ -71,8 +71,8 @@ export default function Others() {
             marginTop: 10,
           }}
         >
-          <TouchableOpacity
-            onPress={() => router.push("/screens/mutation")}
+          <Pressable
+            onPress={() => router.push("/protected/mutation")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -95,9 +95,9 @@ export default function Others() {
             >
               Mutations
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("/screens/transfert")}
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/protected/transfert")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -120,7 +120,7 @@ export default function Others() {
             >
               Transferts
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <View
           style={{
@@ -130,8 +130,8 @@ export default function Others() {
             marginTop: 10,
           }}
         >
-          <TouchableOpacity
-            onPress={() => router.push("/screens/anomalie")}
+          <Pressable
+            onPress={() => router.push("/protected/anomalie")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -154,9 +154,9 @@ export default function Others() {
             >
               Anomalies
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("/screens/traitement")}
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/protected/traitement")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -179,10 +179,10 @@ export default function Others() {
             >
               Traitements
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
-    </ProtectedRoute>
+    </>
   );
 }
 
