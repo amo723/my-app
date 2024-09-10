@@ -23,7 +23,43 @@ export default function NewTypeLoge() {
   const [libelle, setLibelle] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
-  useEffect(() => {
+
+useEffect(() => {
+  const types: Data[] = [];
+
+  const func = async () => {
+    try {
+      const response = await fetch('https://kerneltech.cloud/typeLoge', {
+        method: 'GET', // Spécifie la méthode de la requête
+        headers: {
+          'Content-Type': 'application/json', // Spécifie le type de contenu attendu
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        data.results.map((item: any) => {
+          types.push({
+            value: item.id,
+            label: item.surface,
+          });
+        });
+        setData(types);
+      } else {
+        console.error('Erreur de la requête:', response.status);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données:', error);
+    }
+  };
+
+  func();
+
+  return () => {};
+}, []);
+
+
+  /*useEffect(() => {
     const types: Data[] = [];
     const func = async () => {
       await api
@@ -47,7 +83,7 @@ export default function NewTypeLoge() {
     func();
 
     return () => {};
-  }, []);
+  }, []);*/
 
   const toggleCheckbox = () => {
     setIsSelected(!isSelected);
@@ -59,6 +95,35 @@ export default function NewTypeLoge() {
   };
 
   const handleClick = async () => {
+    try {
+      const response = await fetch('https://kerneltech.cloud/loge/new', {
+        method: 'POST', // Spécifie la méthode POST
+        headers: {
+          'Content-Type': 'application/json', // Spécifie le type de contenu
+        },
+        body: JSON.stringify({
+          typeLoge: type,
+          libelle: libelle,
+          active: isSelected,
+          date_activation_desactivation: new Date(),
+        }), // Convertit les données en JSON pour l'envoi
+      });
+  
+      if (response.status === 201) {
+        alert('Loge enregistrée avec succès');
+        router.replace('/loge');
+      } else if (response.status === 202) {
+        alert('Cette loge existe déjà');
+      } else {
+        console.error('Réponse inattendue du serveur:', response.status);
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi des données:', error);
+    }
+  };
+  
+
+  /*const handleClick = async () => {
     await api
       .post(`loge/new`, {
         typeLoge: type,
@@ -79,7 +144,7 @@ export default function NewTypeLoge() {
       .catch(function (error) {
         console.log(error);
       });
-  };
+  };*/
 
   return (
     <>

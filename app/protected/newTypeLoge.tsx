@@ -4,9 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
@@ -24,6 +22,33 @@ export default function NewTypeLoge() {
   const [capaciteMax, setCapaciteMax] = useState("");
 
   const handleClick = async () => {
+    try {
+      const response = await fetch('https://kerneltech.cloud/typeLoge/new', {
+        method: 'POST', // Spécifie la méthode POST
+        headers: {
+          'Content-Type': 'application/json', // Spécifie que le contenu est au format JSON
+        },
+        body: JSON.stringify({
+          surface: surface,
+          capacite_max: capaciteMax,
+        }), // Convertit les données en JSON pour l'envoi
+      });
+  
+      if (response.status === 201) {
+        alert('Type de loge enregistré avec succès');
+        router.replace('/protected/typeLoge');
+      } else if (response.status === 202) {
+        alert(`Le type de loge avec une surface de ${surface} existe déjà`);
+      } else {
+        console.error('Réponse inattendue du serveur:', response.status);
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi des données:', error);
+    }
+  };
+  
+
+  /*const handleClick = async () => {
     await api
       .post(`typeLoge/new`, {
         surface: surface,
@@ -42,7 +67,7 @@ export default function NewTypeLoge() {
       .catch(function (error) {
         console.log(error);
       });
-  };
+  };*/
 
   return (
     <>
