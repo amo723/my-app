@@ -46,7 +46,7 @@ export default function TypeLoge() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("https://kerneltech.cloud/typeLoge", {
+        const response = await fetch("http://kerneltech.cloud/typeLoge", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
