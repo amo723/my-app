@@ -42,6 +42,7 @@
       "allowExternalNetworking": true
     },
     "extra": {
+     "enableDebugging": true,   // Définir une variable pour activer le débogage en production
       "eas": {
         "projectId": "defac88a-49ac-4dd4-8e6c-c4c40507fca2"
       }
