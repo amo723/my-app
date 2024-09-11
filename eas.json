@@ -13,7 +13,7 @@
     },
     "production": {
       "env": {
-        "ENABLE_DEBUGGING": "true"  // Variable d'environnement spécifique à la production
+        "ENABLE_DEBUGGING": "true"
       },
       "android": {
         "buildType": "apk",

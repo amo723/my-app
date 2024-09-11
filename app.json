@@ -29,6 +29,7 @@
       "permissions": [
         "INTERNET"
       ],
+      "debuggable": true,
       "versionCode": 1
     },
     "adaptiveIcon": {
