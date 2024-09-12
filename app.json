@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.madibacorp.madiba"
@@ -26,9 +24,7 @@
     },
     "android": {
       "package": "com.madibacorp.madiba",
-      "permissions": [
-        "INTERNET"
-      ],
+      "permissions": ["INTERNET"],
       "debuggable": true,
       "versionCode": 1
     },
@@ -36,18 +32,16 @@
       "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
     },
-    "plugins": [
-      "expo-secure-store"
-    ],
+    "plugins": ["expo-secure-store"],
     "network": {
       "allowExternalNetworking": true
     },
     "extra": {
-     "enableDebugging": true,   // Définir une variable pour activer le débogage en production
+      "enableDebugging": true,
       "eas": {
         "projectId": "defac88a-49ac-4dd4-8e6c-c4c40507fca2"
       }
     },
-    "owner": "amo237" 
+    "owner": "amo237"
   }
 }

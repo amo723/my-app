@@ -46,7 +46,7 @@ export default function LogeScreen() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("https://kerneltech.cloud/loge", {
+        const response = await fetch("https://api.restful-api.dev/objects", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function LogeScreen() {
         }
 
         apiData = await response.json(); // Stocker les données dans la variable
-        console.log(apiData); // Vous pouvez utiliser les données ici
+        //console.log(apiData); // Vous pouvez utiliser les données ici
       } catch (error) {
         console.error("Error:", error);
       }
@@ -70,12 +70,19 @@ export default function LogeScreen() {
     // Exemple d'appel de la fonction
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
-      data.results.map((item: any) => {
+      console.log("data received", data);
+      data.map((item: any) => {
+        types.push({
+          id: item.id,
+          libelle: item.name,
+        });
+      });
+      /*data.results.map((item: any) => {
         types.push({
           id: item.id,
           libelle: item.libelle,
         });
-      });
+      });*/
       setLoges(types);
     });
 
