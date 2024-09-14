@@ -46,7 +46,7 @@ export default function TypeLoge() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("http://kerneltech.cloud/typeLoge", {
+        const response = await fetch("https://kerneltech.cloud", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,13 +55,22 @@ export default function TypeLoge() {
         });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          // Si la réponse n'est pas "ok", vous pouvez également récupérer des détails de l'erreur de l'API
+          const errorDetails = await response.text();
+          throw new Error(
+            `HTTP error! Status: ${response.status}, Message: ${errorDetails}`
+          );
         }
 
         apiData = await response.json(); // Stocker les données dans la variable
-        console.log(apiData); // Vous pouvez utiliser les données ici
       } catch (error) {
-        console.error("Error:", error);
+        // Capture des détails spécifiques sur l'erreur
+        if (error instanceof Error) {
+          console.error("Error message:", error.message); // Le message d'erreur
+          console.error("Error stack:", error.stack); // La pile de l'erreur
+        } else {
+          console.error("Unexpected error:", error); // Erreurs non conventionnelles
+        }
       }
 
       return apiData;
@@ -70,7 +79,7 @@ export default function TypeLoge() {
     // Exemple d'appel de la fonction
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
-      console.log("ddddd", data);
+      console.log("typeLoges", data);
       data.results.map((item: any) => {
         types.push({
           id: item.id,

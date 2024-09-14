@@ -1,12 +1,6 @@
 // app/(tabs)/profile.tsx
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Pressable } from "react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import api from "@/constants/api";
@@ -23,30 +17,40 @@ export default function NewTypeLoge() {
 
   const handleClick = async () => {
     try {
-      const response = await fetch('https://kerneltech.cloud/typeLoge/new', {
-        method: 'POST', // Spécifie la méthode POST
+      const response = await fetch("https://kerneltech.cloud/typeLoge/new", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json', // Spécifie que le contenu est au format JSON
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           surface: surface,
           capacite_max: capaciteMax,
-        }), // Convertit les données en JSON pour l'envoi
+        }),
       });
-  
-      if (response.status === 201) {
-        alert('Type de loge enregistré avec succès');
-        router.replace('/protected/typeLoge');
-      } else if (response.status === 202) {
-        alert(`Le type de loge avec une surface de ${surface} existe déjà`);
+
+      if (!response.ok) {
+        // Lire le corps de la réponse pour plus de détails
+        const errorData = await response.json();
+        console.error("Erreur du serveur:", response.status, errorData);
+        alert(
+          `Erreur lors de l'envoi des données: ${
+            errorData.message || "Une erreur est survenue"
+          }`
+        );
       } else {
-        console.error('Réponse inattendue du serveur:', response.status);
+        const responseData = await response.json();
+        if (response.status === 201) {
+          alert("Type de loge enregistré avec succès");
+          router.replace("/protected/typeLoge");
+        } else if (response.status === 202) {
+          alert(`Le type de loge avec une surface de ${surface} existe déjà`);
+        }
       }
     } catch (error) {
-      console.error('Erreur lors de l\'envoi des données:', error);
+      console.error("Erreur lors de l'envoi des données:", error);
+      alert("Une erreur est survenue lors de l'envoi des données.");
     }
   };
-  
 
   /*const handleClick = async () => {
     await api

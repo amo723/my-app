@@ -5,4 +5,4 @@ export const API_BASE_URL_ONLINE = "http://kerneltech.cloud/";
 
 //export const apiUrl = Constants.expoConfig?.extra?.apiUrl || "http://192.168.42.124:8014/";
 export const apiUrl =
-  Constants.expoConfig?.extra?.apiUrl || "http://kerneltech.cloud/";
+  Constants.expoConfig?.extra?.apiUrl || "https://kerneltech.cloud:8014/";
