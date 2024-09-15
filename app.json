@@ -25,7 +25,6 @@
     "android": {
       "package": "com.madibacorp.madiba",
       "permissions": ["INTERNET"],
-      "usesCleartextTraffic": true,
       "debuggable": true,
       "versionCode": 1
     },

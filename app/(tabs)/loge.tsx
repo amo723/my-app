@@ -133,7 +133,7 @@ export default function LogeScreen() {
   }, []);
 
   // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
-  const deleteItem = useCallback(
+  /*const deleteItem = useCallback(
     async (element: any) => {
       if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
         await api
@@ -152,6 +152,39 @@ export default function LogeScreen() {
           .catch(function (error) {
             console.log(error);
           });
+      }
+    },
+    [setLoges]
+  );*/
+
+  const deleteItem = useCallback(
+    async (element: any) => {
+      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
+        try {
+          const response = await fetch(
+            `https://api.restful-api.dev/objects/${element}`,
+            {
+              method: "DELETE", // Spécifie la méthode POST
+              headers: {
+                "Content-Type": "application/json", // Spécifie le type de contenu
+              },
+            }
+          );
+
+          if (response.status === 201) {
+            alert("Loge enregistrée avec succès");
+            router.replace("/loge");
+          } else if (response.status === 202) {
+            alert("Cette loge existe déjà");
+          } else {
+            console.error("Réponse inattendue du serveur:", response.status);
+          }
+        } catch (error) {
+          console.error(
+            "Erreur lors de l'envoi de la suppression de la loge:",
+            error
+          );
+        }
       }
     },
     [setLoges]
@@ -178,16 +211,16 @@ export default function LogeScreen() {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            margin: 20,
+            margin: 15,
           }}
         >
           <Pressable
             onPress={() => router.push("/protected/typeLoge")}
             style={{
               marginHorizontal: 10,
-              padding: Spacing * 2,
+              paddingHorizontal: Spacing,
               backgroundColor: Colors.primary,
-              marginVertical: Spacing * 2,
+              marginVertical: Spacing,
               borderRadius: Spacing,
               shadowColor: Colors.primary,
               shadowOffset: { width: 0, height: Spacing },
@@ -201,6 +234,7 @@ export default function LogeScreen() {
                 color: Colors.onPrimary,
                 textAlign: "center",
                 fontSize: FontSize.large,
+                padding: 15,
               }}
             >
               Types de loge
@@ -210,7 +244,7 @@ export default function LogeScreen() {
             onPress={() => router.push("/protected/newLoge")}
             style={{
               marginHorizontal: 10,
-              padding: Spacing * 2,
+              padding: Spacing,
               backgroundColor: Colors.primary,
               marginVertical: Spacing * 2,
               borderRadius: Spacing,
@@ -230,11 +264,11 @@ export default function LogeScreen() {
             padding: SPACING,
             paddingTop: StatusBar.currentHeight || 42,
           }}
-          style={{ paddingVertical: 40 }}
+          style={{ paddingVertical: 20 }}
           renderItem={({ item }) => (
             <View
               style={{
-                margin: 5,
+                margin: 2,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 padding: SPACING,

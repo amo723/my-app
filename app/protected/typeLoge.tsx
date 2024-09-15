@@ -46,13 +46,16 @@ export default function TypeLoge() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("https://kerneltech.cloud", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // Ajouter d'autres en-têtes si nécessaire
-          },
-        });
+        const response = await fetch(
+          "https://doctor.backbone-corp.com:8013/service",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Ajouter d'autres en-têtes si nécessaire
+            },
+          }
+        );
 
         if (!response.ok) {
           // Si la réponse n'est pas "ok", vous pouvez également récupérer des détails de l'erreur de l'API
@@ -80,10 +83,16 @@ export default function TypeLoge() {
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
       console.log("typeLoges", data);
-      data.results.map((item: any) => {
+      /*data.results.map((item: any) => {
         types.push({
           id: item.id,
           libelle: item.surface,
+        });
+      });*/
+      data.results.map((item: any) => {
+        types.push({
+          id: item.id,
+          libelle: item.name,
         });
       });
       setTypeLoges(types);

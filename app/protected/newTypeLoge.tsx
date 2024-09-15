@@ -110,7 +110,7 @@ export default function NewTypeLoge() {
           <Pressable
             onPress={handleClick}
             style={{
-              padding: Spacing * 2,
+              padding: Spacing,
               backgroundColor: Colors.primary,
               marginVertical: Spacing * 2,
               borderRadius: Spacing,

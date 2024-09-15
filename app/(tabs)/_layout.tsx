@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
 
@@ -27,7 +28,7 @@ export default function TabLayout() {
           // vous pouvez retourner n'importe quel ccomposant ici !
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: "gray",
       })}
     >
