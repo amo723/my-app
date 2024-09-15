@@ -8,7 +8,7 @@ export default function HomePage() {
 
   const navigate = () => {
     if (isAuthenticated) {
-      router.push("/protected/dashboard");
+      router.push("/(tabs)/home");
     } else {
       router.push("/login");
     }
@@ -18,9 +18,9 @@ export default function HomePage() {
     <View style={styles.container}>
       <Text style={styles.title}>FERME MADIBA</Text>
       <Button title="Accéder" onPress={navigate} />
-      <Link href={"/(tabs)/home"} style={styles.link}>
+      {/*<Link href={"/(tabs)/home"} style={styles.link}>
         Go to Home Tab
-      </Link>
+      </Link>*/}
     </View>
   );
 }

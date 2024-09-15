@@ -11,6 +11,7 @@ import {
   Modal,
   Pressable,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -80,7 +81,7 @@ export default function LogeScreen() {
     // Exemple d'appel de la fonction
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
-      console.log("data received", data);
+      //console.log("data received", data);
       data.map((item: any) => {
         types.push({
           id: item.id,
@@ -162,7 +163,7 @@ export default function LogeScreen() {
       if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
         try {
           const response = await fetch(
-            `https://api.restful-api.dev/objects/${element}`,
+            `https://api.restful-api.dev/objects/${element.id}`,
             {
               method: "DELETE", // Spécifie la méthode POST
               headers: {
@@ -171,8 +172,10 @@ export default function LogeScreen() {
             }
           );
 
-          if (response.status === 201) {
-            alert("Loge enregistrée avec succès");
+          console.log(response);
+
+          if (response.status === 201 || response.status === 200) {
+            alert("Loge supprimée avec succès");
             router.replace("/loge");
           } else if (response.status === 202) {
             alert("Cette loge existe déjà");
