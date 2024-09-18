@@ -5,14 +5,11 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Dimensions,
   StatusBar,
-  SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
@@ -33,7 +30,7 @@ type ItemType = {
 };
 
 export default function Traitement() {
-  const [typeLoges, setTypeLoges] = useState<ItemType[]>([]);
+  const [traitements, setTraitements] = useState<ItemType[]>([]);
   const [data, setData] = useState([]); // État pour stocker les données
   const [loading, setLoading] = useState(true); // État pour gérer le chargement
 
@@ -49,7 +46,7 @@ export default function Traitement() {
     const types: any = [];
     const func = async () => {
       await api
-        .get(`typeLoge`)
+        .get(`traitement`)
         .then(function (response) {
           if (response.status === 200) {
             const data = response.data.results;
@@ -59,7 +56,7 @@ export default function Traitement() {
                 libelle: item.surface,
               });
             });
-            setTypeLoges(types);
+            setTraitements(types);
           }
         })
         .catch(function (error) {
@@ -96,7 +93,7 @@ export default function Traitement() {
           }}
         >
           <Pressable
-            onPress={() => router.push("/protected/newTypeLoge")}
+            onPress={() => router.push("/protected/newTraitement")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -113,7 +110,7 @@ export default function Traitement() {
           </Pressable>
         </View>
         <FlatList
-          data={typeLoges}
+          data={traitements}
           contentContainerStyle={{
             padding: SPACING,
             paddingTop: StatusBar.currentHeight || 42,

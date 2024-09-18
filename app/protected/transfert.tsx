@@ -5,11 +5,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Dimensions,
   StatusBar,
-  SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
@@ -33,7 +30,7 @@ type ItemType = {
 };
 
 export default function Transfert() {
-  const [typeLoges, setTypeLoges] = useState<ItemType[]>([]);
+  const [transferts, setTransferts] = useState<ItemType[]>([]);
   const [data, setData] = useState([]); // État pour stocker les données
   const [loading, setLoading] = useState(true); // État pour gérer le chargement
 
@@ -49,7 +46,7 @@ export default function Transfert() {
     const types: any = [];
     const func = async () => {
       await api
-        .get(`typeLoge`)
+        .get(`transfert`)
         .then(function (response) {
           if (response.status === 200) {
             const data = response.data.results;
@@ -59,7 +56,7 @@ export default function Transfert() {
                 libelle: item.surface,
               });
             });
-            setTypeLoges(types);
+            setTransferts(types);
           }
         })
         .catch(function (error) {
@@ -96,7 +93,7 @@ export default function Transfert() {
           }}
         >
           <Pressable
-            onPress={() => router.push("/protected/newTypeLoge")}
+            onPress={() => router.push("/protected/newTransfert")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,
@@ -113,7 +110,7 @@ export default function Transfert() {
           </Pressable>
         </View>
         <FlatList
-          data={typeLoges}
+          data={transferts}
           contentContainerStyle={{
             padding: SPACING,
             paddingTop: StatusBar.currentHeight || 42,

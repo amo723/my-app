@@ -9,6 +9,7 @@ import {
   StatusBar,
   Pressable,
   Alert,
+  Button,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -47,7 +48,7 @@ export default function TypeLoge() {
 
       try {
         const response = await fetch(
-          "https://doctor.backbone-corp.com:8013/service",
+          "https://doctor.backbone-corp.com:8013/typeLoge",
           {
             method: "GET",
             headers: {
@@ -83,16 +84,10 @@ export default function TypeLoge() {
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
       console.log("typeLoges", data);
-      /*data.results.map((item: any) => {
-        types.push({
-          id: item.id,
-          libelle: item.surface,
-        });
-      });*/
       data.results.map((item: any) => {
         types.push({
           id: item.id,
-          libelle: item.name,
+          libelle: item.surface,
         });
       });
       setTypeLoges(types);
@@ -101,27 +96,42 @@ export default function TypeLoge() {
     return () => {};
   }, []);
 
+
   // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
   const deleteItem = useCallback(
     async (element: any) => {
-      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
-        await api
-          .delete(`typeLoge/delete/${element.id}`)
-          .then((response) => {
-            if (response.status === 204) {
-              setTypeLoges((prevItems) =>
-                prevItems.filter((item) => item.id !== element.id)
-              );
-              Alert.alert("Type de loge supprimé avec succes");
-            } else {
-              Alert.alert("Erreur lors de la suppression du type de loge");
-              return;
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
+      // Alerte de confirmation avant de supprimer
+      Alert.alert(
+        "Confirmation", // Titre de l'alerte
+        "Voulez-vous vraiment effectuer cette suppression ?", // Message
+        [
+          {
+            text: "Annuler", // Si l'utilisateur annule
+            onPress: () => console.log("Suppression annulée"),
+            style: "cancel",
+          },
+          {
+            text: "Supprimer", // Si l'utilisateur confirme
+            onPress: async () => {
+              try {
+                const response = await api.delete(`typeLoge/delete/${element.id}`);
+                if (response.status === 204) {
+                  setTypeLoges((prevItems) =>
+                    prevItems.filter((item) => item.id !== element.id)
+                  );
+                  Alert.alert("Succès", "Type de loge supprimé avec succès");
+                } else {
+                  Alert.alert("Erreur", "Erreur lors de la suppression du type de loge");
+                }
+              } catch (error) {
+                console.log(error);
+                Alert.alert("Erreur", "Une erreur est survenue");
+              }
+            },
+          },
+        ],
+        { cancelable: false } // Empêche la fermeture en appuyant en dehors de l'alerte
+      );
     },
     [setTypeLoges]
   );

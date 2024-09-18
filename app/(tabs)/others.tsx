@@ -1,15 +1,10 @@
 // app/(tabs)/profile.tsx
 
 import {
-  FlatList,
   View,
   Text,
   StyleSheet,
-  TextInput,
   Dimensions,
-  StatusBar,
-  SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";

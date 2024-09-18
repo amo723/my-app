@@ -5,14 +5,11 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Dimensions,
   StatusBar,
-  SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
@@ -49,7 +46,7 @@ export default function Anomalie() {
     const types: any = [];
     const func = async () => {
       await api
-        .get(`typeLoge`)
+        .get(`anomalie`)
         .then(function (response) {
           if (response.status === 200) {
             const data = response.data.results;
@@ -96,7 +93,7 @@ export default function Anomalie() {
           }}
         >
           <Pressable
-            onPress={() => router.push("/protected/newTypeLoge")}
+            onPress={() => router.push("/protected/newAnomalie")}
             style={{
               marginHorizontal: 10,
               padding: Spacing * 2,

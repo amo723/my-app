@@ -10,85 +10,27 @@ import {
 } from "react-native";
 import { Link, router } from "expo-router";
 import { useEffect, useState } from "react";
-import api from "@/constants/api";
 import { Button, CheckBox } from "react-native-elements";
+import api from "@/constants/api";
 import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
-import Font from "@/constants/Font";
-import AppTextInput from "@/components/AppTextInput";
-import AppSelectComponent from "@/components/AppSelect";
 import { Colors } from "@/constants/Colors";
+import Font from "@/constants/Font";
+import AppSelectComponent from "@/components/AppSelect";
+import AppTextInput from "@/components/AppTextInput";
+
 
 interface Data {
   label: string;
   value: string;
 }
 
-export default function NewTypeLoge() {
+export default function NewMutation() {
   const [data, setData] = useState<Data[]>([]);
   const [type, setType] = useState("");
   const [libelle, setLibelle] = useState("");
   const [isSelected, setIsSelected] = useState(false);
 
-  useEffect(() => {
-    const types: Data[] = [];
-
-    const func = async () => {
-      try {
-        const response = await fetch("https://doctor.backbone-corp.com:8013/typeLoge", {
-          method: "GET", // Spécifie la méthode de la requête
-          headers: {
-            "Content-Type": "application/json", // Spécifie le type de contenu attendu
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          data.results.map((item: any) => {
-            types.push({
-              value: item.id,
-              label: item.surface,
-            });
-          });
-          setData(types);
-        } else {
-          console.error("Erreur de la requête:", response.status);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
-      }
-    };
-
-    func();
-
-    return () => {};
-  }, []);
-
-  /*useEffect(() => {
-    const types: Data[] = [];
-    const func = async () => {
-      await api
-        .get(`typeLoge`)
-        .then(function (response) {
-          if (response.status === 200) {
-            const data = response.data.results;
-            data.map((item: any) => {
-              types.push({
-                value: item.id,
-                label: item.surface,
-              });
-            });
-            setData(types);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    };
-    func();
-
-    return () => {};
-  }, []);*/
 
   const toggleCheckbox = () => {
     setIsSelected(!isSelected);
@@ -137,65 +79,17 @@ export default function NewTypeLoge() {
                 marginVertical: Spacing * 3,
               }}
             >
-              Nouvelle loge
+              Nouvelle Mutation
             </Text>
           </View>
-          <View style={{ flex: 1, justifyContent: "center" }}>
-            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
-              Type de loge
-            </Text>
-            <AppSelectComponent
-              data={data}
-              selectedValue={type}
-              onValueChange={handleTypeChange}
-            />
-          </View>
+
           <View>
-            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
-              Libellé
+            <Text style={{ justifyContent: 'center', textAlign: "center", marginTop: 20, fontWeight: 700, fontSize: 16 }}>
+              En cours de developpement...
             </Text>
-            <AppTextInput
-              value={libelle}
-              onChangeText={setLibelle}
-              placeholder="Saisir le libelle"
-            />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-              }}
-            >
-              <CheckBox
-                title="Activer la loge?"
-                checked={isSelected}
-                onPress={toggleCheckbox}
-              />
-            </View>
+
           </View>
-          <Pressable
-            onPress={handleClick}
-            style={{
-              padding: 10,
-              backgroundColor: Colors.primary,
-              marginVertical: Spacing * 2,
-              borderRadius: Spacing,
-              shadowColor: Colors.primary,
-              shadowOffset: { width: 0, height: Spacing },
-              shadowOpacity: 0.3,
-              shadowRadius: Spacing,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: Font["poppins-bold"],
-                color: Colors.onPrimary,
-                textAlign: "center",
-                fontSize: FontSize.large,
-              }}
-            >
-              Enregistrer
-            </Text>
-          </Pressable>
+
         </View>
       </SafeAreaView>
     </>

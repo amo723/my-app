@@ -4,12 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   SafeAreaView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import api from "@/constants/api";
 import Spacing from "@/constants/Spacing";
@@ -17,7 +15,8 @@ import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
 import AppSelectComponent from "@/components/AppSelect";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors } from "@/constants/Colors";
+//import { Colors } from "react-native/Libraries/NewAppScreen";
 
 interface Data {
   label: string;
@@ -152,7 +151,7 @@ export default function NewRecolte() {
           <Pressable
             onPress={handleClick}
             style={{
-              padding: Spacing * 2,
+              padding: 15,
               backgroundColor: Colors.primary,
               marginVertical: Spacing * 2,
               borderRadius: Spacing,

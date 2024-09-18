@@ -150,7 +150,7 @@ export default function NewSujet() {
           <Pressable
             onPress={handleClick}
             style={{
-              padding: Spacing * 2,
+              padding: 15,
               backgroundColor: Colors.primary,
               marginVertical: Spacing * 2,
               borderRadius: Spacing,

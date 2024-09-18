@@ -5,12 +5,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Dimensions,
   StatusBar,
-  SafeAreaView,
-  TouchableOpacity,
   Pressable,
+  Alert,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,24 +44,38 @@ export default function Recolte() {
   // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
   const deleteItem = useCallback(
     async (element: any) => {
-      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
-        await api
-          .delete(`loge/delete/${element.id}`)
-          .then((response) => {
-            if (response.status === 204) {
-              setRecoltes((prevItems) =>
-                prevItems.filter((item) => item.id !== element.id)
-              );
-              alert("Loge supprimée avec succes");
-            } else {
-              alert("Erreur lors de la suppression de la loge");
-              return;
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
+      // Alerte de confirmation avant de supprimer
+      Alert.alert(
+        "Confirmation", // Titre de l'alerte
+        "Voulez-vous vraiment effectuer cette suppression ?", // Message
+        [
+          {
+            text: "Annuler", // Bouton Annuler
+            onPress: () => console.log("Suppression annulée"),
+            style: "cancel", // Style du bouton pour annuler
+          },
+          {
+            text: "Supprimer", // Bouton pour confirmer
+            onPress: async () => {
+              try {
+                const response = await api.delete(`recolte/delete/${element.id}`);
+                if (response.status === 204) {
+                  setRecoltes((prevItems) =>
+                    prevItems.filter((item) => item.id !== element.id)
+                  );
+                  Alert.alert("Succès", "Recolte supprimée avec succès");
+                } else {
+                  Alert.alert("Erreur", "Erreur lors de la suppression de la recolte");
+                }
+              } catch (error) {
+                console.log(error);
+                Alert.alert("Erreur", "Une erreur est survenue");
+              }
+            },
+          },
+        ],
+        { cancelable: false } // Empêche la fermeture de l'alerte sans interaction avec les boutons
+      );
     },
     [setRecoltes]
   );

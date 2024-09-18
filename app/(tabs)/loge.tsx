@@ -48,7 +48,7 @@ export default function LogeScreen() {
       let apiData: any = null;
 
       try {
-        const response = await fetch("https://api.restful-api.dev/objects", {
+        const response = await fetch("https://doctor.backbone-corp.com:8013/loge", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -81,19 +81,13 @@ export default function LogeScreen() {
     // Exemple d'appel de la fonction
     fetchData().then((data) => {
       // Vous pouvez utiliser 'data' ici si nécessaire
-      //console.log("data received", data);
-      data.map((item: any) => {
-        types.push({
-          id: item.id,
-          libelle: item.name,
-        });
-      });
-      /*data.results.map((item: any) => {
+      console.log("data received", data);
+      data.results.map((item: any) => {
         types.push({
           id: item.id,
           libelle: item.libelle,
         });
-      });*/
+      });
       setLoges(types);
     });
 
@@ -134,61 +128,40 @@ export default function LogeScreen() {
   }, []);
 
   // Utilser 'useCallback' pour mémoriser la fonction 'deleteItem', ce qui empêchera sa recréation à chaque rendu du composant
-  /*const deleteItem = useCallback(
-    async (element: any) => {
-      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
-        await api
-          .delete(`loge/delete/${element.id}`)
-          .then((response) => {
-            if (response.status === 204) {
-              setLoges((prevItems) =>
-                prevItems.filter((item) => item.id !== element.id)
-              );
-              alert("Loge supprimée avec succes");
-            } else {
-              alert("Erreur lors de la suppression de la loge");
-              return;
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-    },
-    [setLoges]
-  );*/
-
   const deleteItem = useCallback(
     async (element: any) => {
-      if (confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
-        try {
-          const response = await fetch(
-            `https://api.restful-api.dev/objects/${element.id}`,
-            {
-              method: "DELETE", // Spécifie la méthode POST
-              headers: {
-                "Content-Type": "application/json", // Spécifie le type de contenu
-              },
-            }
-          );
-
-          console.log(response);
-
-          if (response.status === 201 || response.status === 200) {
-            alert("Loge supprimée avec succès");
-            router.replace("/loge");
-          } else if (response.status === 202) {
-            alert("Cette loge existe déjà");
-          } else {
-            console.error("Réponse inattendue du serveur:", response.status);
-          }
-        } catch (error) {
-          console.error(
-            "Erreur lors de l'envoi de la suppression de la loge:",
-            error
-          );
-        }
-      }
+      // Alerte de confirmation avant de supprimer
+      Alert.alert(
+        "Confirmation", // Titre de l'alerte
+        "Voulez-vous vraiment effectuer cette suppression ?", // Message
+        [
+          {
+            text: "Annuler", // Si l'utilisateur annule
+            onPress: () => console.log("Suppression annulée"),
+            style: "cancel",
+          },
+          {
+            text: "Supprimer", // Si l'utilisateur confirme
+            onPress: async () => {
+              try {
+                const response = await api.delete(`loge/delete/${element.id}`);
+                if (response.status === 204) {
+                  setLoges((prevItems) =>
+                    prevItems.filter((item) => item.id !== element.id)
+                  );
+                  Alert.alert("Succès", "Loge supprimée avec succès");
+                } else {
+                  Alert.alert("Erreur", "Erreur lors de la suppression de la loge");
+                }
+              } catch (error) {
+                console.log(error);
+                Alert.alert("Erreur", "Une erreur est survenue lors de la suppression");
+              }
+            },
+          },
+        ],
+        { cancelable: false } // Empêche la fermeture en appuyant en dehors de l'alerte
+      );
     },
     [setLoges]
   );
