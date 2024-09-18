@@ -137,7 +137,7 @@ export default function NewTypeLoge() {
                 marginVertical: Spacing * 3,
               }}
             >
-              Nouvelle loge
+              Nouvelle loge 
             </Text>
           </View>
           <View style={{ flex: 1, justifyContent: "center" }}>
@@ -151,7 +151,7 @@ export default function NewTypeLoge() {
             />
           </View>
           <View>
-            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
+            <Text style={{ marginTop: 60, fontWeight: 700, fontSize: 16 }}>
               Libellé
             </Text>
             <AppTextInput
@@ -175,7 +175,7 @@ export default function NewTypeLoge() {
           <Pressable
             onPress={handleClick}
             style={{
-              padding: 10,
+              padding: 15,
               backgroundColor: Colors.primary,
               marginVertical: Spacing * 2,
               borderRadius: Spacing,
