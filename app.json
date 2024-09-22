@@ -27,14 +27,14 @@
       "permissions": ["INTERNET"],
       "debuggable": true,
       "versionCode": 1,
-      "icon": "./assets/madiba-icon.svg",
+      "icon": "./assets/madiba-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",  
         "backgroundColor": "#FFFFFF"  
       }
     },
     "adaptiveIcon": {
-      "foregroundImage": "./assets/madiba-icon.svg",
+      "foregroundImage": "./assets/madiba-icon.png",
       "backgroundColor": "#ffffff"
     },
     "plugins": ["expo-secure-store"],
