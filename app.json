@@ -29,7 +29,7 @@
       "versionCode": 1,
       "icon": "./assets/madiba-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",  
+        "foregroundImage": "./assets/madiba-icon.png", 
         "backgroundColor": "#FFFFFF"  
       }
     },
