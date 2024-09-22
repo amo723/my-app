@@ -8,7 +8,7 @@ export default function HomePage() {
 
   const navigate = () => {
     if (isAuthenticated) {
-      router.push("/(tabs)/home");
+      router.push("/MADIBA/home");
     } else {
       router.push("/login");
     }

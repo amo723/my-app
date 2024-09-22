@@ -19,6 +19,7 @@ import Spacing from "@/constants/Spacing";
 import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
 import { Colors } from "@/constants/Colors";
+import { apiUrl } from "@/constants/config";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -48,7 +49,7 @@ export default function TypeLoge() {
 
       try {
         const response = await fetch(
-          "https://doctor.backbone-corp.com:8013/typeLoge",
+          `${apiUrl}/typeLoge`,
           {
             method: "GET",
             headers: {

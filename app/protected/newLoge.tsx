@@ -18,6 +18,7 @@ import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
 import AppSelectComponent from "@/components/AppSelect";
 import { Colors } from "@/constants/Colors";
+import { apiUrl } from "@/constants/config";
 
 interface Data {
   label: string;
@@ -35,7 +36,7 @@ export default function NewTypeLoge() {
 
     const func = async () => {
       try {
-        const response = await fetch("https://doctor.backbone-corp.com:8013/typeLoge", {
+        const response = await fetch( `${apiUrl}/typeLoge`, {
           method: "GET", // Spécifie la méthode de la requête
           headers: {
             "Content-Type": "application/json", // Spécifie le type de contenu attendu
@@ -112,7 +113,7 @@ export default function NewTypeLoge() {
       .then((response) => {
         if (response.status === 201) {
           alert("Loge enregistree avec succes");
-          router.replace("/loge");
+          router.replace("/MADIBA/loge");
         }
         if (response.status === 202) {
           alert(`Cette loge existe deja`);

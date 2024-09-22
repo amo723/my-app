@@ -10,6 +10,7 @@ import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
 import AppTextInput from "@/components/AppTextInput";
 import { Colors } from "@/constants/Colors";
+import { apiUrl } from "@/constants/config";
 
 export default function NewTypeLoge() {
   const [surface, setSurface] = useState("");
@@ -17,7 +18,7 @@ export default function NewTypeLoge() {
 
   const handleClick = async () => {
     try {
-      const response = await fetch("https://doctor.backbone-corp.com:8013/typeLoge/new", {
+      const response = await fetch(`${apiUrl}/typeLoge/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
