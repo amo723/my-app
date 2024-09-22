@@ -26,7 +26,12 @@
       "package": "com.madibacorp.madiba",
       "permissions": ["INTERNET"],
       "debuggable": true,
-      "versionCode": 1
+      "versionCode": 1,
+      "icon": "./assets/madiba-icon.svg",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons/adaptive-icon.png",  
+        "backgroundColor": "#FFFFFF"  
+      }
     },
     "adaptiveIcon": {
       "foregroundImage": "./assets/madiba-icon.svg",
