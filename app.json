@@ -29,7 +29,7 @@
       "versionCode": 1
     },
     "adaptiveIcon": {
-      "foregroundImage": "./assets/adaptive-icon.png",
+      "foregroundImage": "./assets/madiba-icon.svg",
       "backgroundColor": "#ffffff"
     },
     "plugins": ["expo-secure-store"],
