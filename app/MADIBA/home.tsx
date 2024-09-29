@@ -1,5 +1,6 @@
 import { Link } from "expo-router";
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 import Spacing from "@/constants/Spacing";
 import { Colors } from "@/constants/Colors";
 import Font from "@/constants/Font";
@@ -12,17 +13,11 @@ const { width, height } = Dimensions.get('window'); // Obtenez la largeur et la 
 export default function HomePage() {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/malimba-icon.png')} // Assurez-vous que le chemin est correct
-        style={styles.image} // Utilisez les styles définis ci-dessous
-        resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
-      >
         <View style={styles.overlay}>
           <Link style={styles.link} href={"/MADIBA/loge"}>
             <Text style={styles.text}>Consulter les loges</Text>
           </Link>
         </View>
-      </ImageBackground>
     </View>
   );
 }
