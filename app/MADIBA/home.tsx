@@ -1,6 +1,5 @@
 import { Link } from "expo-router";
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
+import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native";
 import Spacing from "@/constants/Spacing";
 import { Colors } from "@/constants/Colors";
 import Font from "@/constants/Font";
@@ -14,7 +13,7 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/madiba-icon.png')} // Assurez-vous que le chemin est correct
+        source={require('../assets/malimba-icon.png')} // chemin relatif vers votre image
         style={styles.image} // Utilisez les styles définis ci-dessous
         resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
       >
