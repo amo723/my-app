@@ -88,6 +88,7 @@ export default function NewRecolte() {
       .post(`recolte/new`, {
         id_loge: idLoge,
         nbre_ponte: nbrePonte,
+        anomalie: anomalie,
         observation: obs,
         date_recolte: new Date(),
       })

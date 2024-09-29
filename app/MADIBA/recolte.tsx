@@ -98,6 +98,7 @@ export default function Recolte() {
               types.push({
                 id: item.id,
                 libelle: item.nbrePonte,
+                anomalie: item.anomalie,
               });
             });
             setRecoltes(types);

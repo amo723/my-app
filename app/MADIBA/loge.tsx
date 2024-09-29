@@ -88,6 +88,8 @@ export default function LogeScreen() {
         types.push({
           id: item.id,
           libelle: item.libelle,
+          nbreMale: item.nbreMale,
+          nbreFemelle: item.nbreFemelle,
           surface: item.typeLoge.surface,
         });
       });
