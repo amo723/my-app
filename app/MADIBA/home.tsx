@@ -13,11 +13,17 @@ const { width, height } = Dimensions.get('window'); // Obtenez la largeur et la 
 export default function HomePage() {
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={require("@/assets/malimba.png")} // Spécifie l'image à utiliser
+        style={styles.image} // Utilisez les styles définis ci-dessous
+        resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
+      >
         <View style={styles.overlay}>
           <Link style={styles.link} href={"/MADIBA/loge"}>
             <Text style={styles.text}>Consulter les loges</Text>
           </Link>
         </View>
+      </ImageBackground>
     </View>
   );
 }
