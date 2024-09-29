@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "MALIMBA-APP",
+    "name": "MALIMBA",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,14 +27,14 @@
       "permissions": ["INTERNET"],
       "debuggable": true,
       "versionCode": 1,
-      "icon": "./assets/malimba-icon.png",
+      "icon": "./assets/madiba-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/malimba-icon.png", 
+        "foregroundImage": "./assets/madiba-icon.png", 
         "backgroundColor": "#FFFFFF"  
       }
     },
     "adaptiveIcon": {
-      "foregroundImage": "./assets/malimba-icon.png",
+      "foregroundImage": "./assets/madiba-icon.png",
       "backgroundColor": "#ffffff"
     },
     "plugins": ["expo-secure-store"],

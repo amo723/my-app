@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/malimba-icon.png')} // Assurez-vous que le chemin est correct
+        source={require('../../assets/madiba-icon.png')} // Assurez-vous que le chemin est correct
         style={styles.image} // Utilisez les styles définis ci-dessous
         resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
       >
