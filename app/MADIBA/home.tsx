@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("@/assets/malimba.png")} // Spécifie l'image à utiliser
+        source={require("@/assets/malimba2.png")} // Spécifie l'image à utiliser
         style={styles.image} // Utilisez les styles définis ci-dessous
         resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
       >

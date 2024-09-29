@@ -27,14 +27,14 @@
       "permissions": ["INTERNET"],
       "debuggable": true,
       "versionCode": 1,
-      "icon": "./assets/malimba-icon.png",
+      "icon": "./assets/malimba2.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/malimba-icon.png", 
+        "foregroundImage": "./assets/malimba2.png", 
         "backgroundColor": "#FFFFFF"  
       }
     },
     "adaptiveIcon": {
-      "foregroundImage": "./assets/malimba-icon.png",
+      "foregroundImage": "./assets/malimba2.png",
       "backgroundColor": "#ffffff"
     },
     "plugins": ["expo-secure-store"],
