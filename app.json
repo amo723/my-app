@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "MADIBA",
+    "name": "MALIMBA",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -29,12 +29,12 @@
       "versionCode": 1,
       "icon": "./assets/madiba-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/madiba-icon.png", 
+        "foregroundImage": "./assets/malimba-icon.png", 
         "backgroundColor": "#FFFFFF"  
       }
     },
     "adaptiveIcon": {
-      "foregroundImage": "./assets/madiba-icon.png",
+      "foregroundImage": "./assets/malimba-icon.png",
       "backgroundColor": "#ffffff"
     },
     "plugins": ["expo-secure-store"],
