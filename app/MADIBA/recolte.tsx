@@ -9,6 +9,8 @@ import {
   StatusBar,
   Pressable,
   Alert,
+  Modal,
+  Button,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,6 +21,7 @@ import FontSize from "@/constants/FontSize";
 import Font from "@/constants/Font";
 import { ProtectedRoute } from "@/context/ProtectedRoute";
 import { Colors } from "@/constants/Colors";
+import AppTextInput from "@/components/AppTextInput";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -33,6 +36,8 @@ type ItemType = {
 
 export default function Recolte() {
   const [recoltes, setRecoltes] = useState<ItemType[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+
   const [data, setData] = useState([]); // État pour stocker les données
   const [loading, setLoading] = useState(true); // État pour gérer le chargement
 
@@ -109,162 +114,194 @@ export default function Recolte() {
 
   return (
     <>
-      <View>
-        <View style={{ alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: FontSize.xLarge,
-              color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
-              marginVertical: Spacing,
-            }}
-          >
-            Récoltes
-          </Text>
-        </View>
+      <View style={styles.headerContainer}>
+        {/* Titre à côté du bouton flottant */}
+        <Text style={styles.headerTitle}>GESTION DES RECOLTES</Text>
+        <Pressable style={styles.fab} onPress={() => router.push("/protected/newRecolte")}>
+          <Ionicons name="add" size={24} color="white" />
+        </Pressable>
       </View>
-      <View style={{ flex: 1 }}>
-        <View
+      
+      <View style={{ flex: 1, marginTop: SPACING , marginHorizontal: 2, marginBottom: 2 }}>
+          {/* Simuler la légende */}
+          <Text style={styles.legend}>LISTE DES RECOLTES</Text>
+          {/* Simuler le fieldset */}
+          <View style={styles.fieldset}>
+            <FlatList
+                data={recoltes}
+                extraData={recoltes}
+                contentContainerStyle={{
+                  padding: 15,
+                  paddingTop: StatusBar.currentHeight || 42,
+                }}
+                style={{ paddingVertical: 18 }}
+                renderItem={({ item }) => (
+                  <View
+                    style={{
+                      margin: 2,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      padding: SPACING,
+                      marginBottom: SPACING,
+                      backgroundColor: "lightblue",
+                      borderRadius: 12,
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 10 },
+                      shadowOpacity: 0.3,
+                      shadowRadius: 20,
+                    }}
+                  >
+                    <View>
+                      <Text style={{ fontSize: 22, fontWeight: "700" }}>
+                        {item.libelle}
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      {/*<Link href={`/updateModal/${item}`} asChild>
+                          <TouchableOpacity>
+                            <Ionicons name="create" size={25} />
+                          </TouchableOpacity>
+                          </Link>*/}
+                      <Ionicons
+                        name="create"
+                        size={25}
+                        onPress={() => setIsVisible(true)}
+                      />
+                      <Ionicons
+                        name="trash"
+                        size={25}
+                        onPress={() => deleteItem(item)}
+                      />
+                    </View>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+              />
+          </View>
+        </View>
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={() => setIsVisible(false)}
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            margin: 20,
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.5",
+            padding: 20,
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: "#ddd",
           }}
         >
-          <Pressable
-            onPress={() => router.push("/protected/newRecolte")}
+          <View
             style={{
-              marginHorizontal: 10,
-              padding: Spacing * 2,
-              backgroundColor: Colors.primary,
-              marginVertical: Spacing * 2,
-              borderRadius: Spacing,
-              shadowColor: Colors.primary,
-              shadowOffset: { width: 0, height: Spacing },
-              shadowOpacity: 0.3,
-              shadowRadius: Spacing,
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#fff",
+              padding: 20,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: "#ddd",
             }}
           >
-            <Ionicons name="add" size={30} color={"white"} />
-          </Pressable>
-        </View>
-        <FlatList
-          data={recoltes}
-          contentContainerStyle={{
-            padding: SPACING,
-            paddingTop: StatusBar.currentHeight || 42,
-          }}
-          style={{ paddingVertical: 40 }}
-          renderItem={({ item }) => (
             <View
               style={{
-                margin: 5,
                 flexDirection: "row",
                 justifyContent: "space-between",
-                padding: SPACING,
-                marginBottom: SPACING,
-                backgroundColor: "rgba(255,255,255,0.8)",
-                borderRadius: 12,
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.3,
-                shadowRadius: 20,
+                alignItems: "center",
+                borderBottomWidth: 1,
+                borderBottomColor: "#ddd",
+                paddingBottom: 10,
               }}
             >
-              <View>
-                <Text style={{ fontSize: 22, fontWeight: "700" }}>
-                  {item.libelle}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Ionicons
-                  name="create"
-                  size={25}
-                  onPress={() => handleModify(item)}
-                />
-                <Ionicons
-                  name="trash"
-                  size={25}
-                  onPress={() => deleteItem(item)}
-                />
-              </View>
+              <Text>Titre du modale</Text>
             </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
+            <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
+              Libellé
+            </Text>
+            <AppTextInput placeholder="Saisir le libelle" />
+            <Button title="Fermer" onPress={() => setIsVisible(false)} />
+          </View>
+        </Modal>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
+    padding: 20,
+    backgroundColor: '#f5f5f5',
     flex: 1,
-    backgroundColor: "#ded",
-    paddingTop: 22,
   },
-  background: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-  },
-  logoContainer: {
+
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 10,
+    padding: 20,
+    backgroundColor: "#f5f5f5",
   },
-  logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 60,
-    resizeMode: "contain",
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: Colors.primary,
+    textAlign: "right"
   },
-  formContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+
+  fieldset: {
+    flex: 1, // Pour que le fieldset prenne tout l'espace restant en bas
+    borderColor: Colors.primary, // Couleur de la bordure verte
+    borderWidth: 2,
+    borderRadius: 8, // Arrondir les coins
+    marginTop: 5,
   },
   title: {
-    fontSize: 18,
-    color: "#000",
-    marginStart: 20,
-    marginBottom: 50,
-    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
   },
-  card: {
+  separator: {
+    marginVertical: 30,
+    height: 1,
     width: "80%",
-    backgroundColor: "#fff",
-    borderRadius: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    padding: 20,
-    marginBottom: 20,
   },
-  inputContainer: {
-    marginBottom: 20,
+  fab: {
+    position: 'absolute',
+    top: 10, // Distance du bas de l'écran
+    right: 20,  // Distance du côté droit de l'écran
+    backgroundColor: Colors.primary, // '#6200ee', Couleur de fond du bouton
+    borderRadius: 50, // Pour arrondir le bouton
+    padding: 15, // Taille du bouton
+    elevation: 5, // Pour l'ombre (uniquement Android)
+  },
+  legend: {
+    fontSize: FontSize.large,
+    color: Colors.primary,
+    fontFamily: Font["poppins-bold"],
+    //fontSize: 18,
+    fontWeight: 'bold',
+    position: 'absolute', // Position pour placer le texte au-dessus du "fieldset"
+    top: 5,
+    left: 30,
+    backgroundColor: '#f5f5f5', // Même couleur que le fond pour masquer la bordure
+    paddingHorizontal: 10,
+    zIndex: 1, // S'assurer que la légende est au-dessus du fieldset
   },
   label: {
+    marginBottom: 10,
     fontSize: 16,
-    color: "#333",
   },
   input: {
     height: 40,
-    borderRadius: 6,
+    borderColor: '#ccc',
     borderWidth: 1,
-    borderColor: "#ddd",
-    color: "#333",
     paddingLeft: 10,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-  button: {
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
+    borderRadius: 5,
+    marginBottom: 20,
   },
 });

@@ -174,13 +174,13 @@ export default function LogeScreen() {
     <>
       <View style={styles.headerContainer}>
         {/* Titre à côté du bouton flottant */}
-        <Text style={styles.headerTitle}>Gestion des Loges</Text>
+        <Text style={styles.headerTitle}>GESTION DES LOGES</Text>
         <Pressable style={styles.fab} onPress={() => router.push("/protected/newLoge")}>
           <Ionicons name="add" size={24} color="white" />
         </Pressable>
       </View>
       
-        <View style={{ flex: 1, marginTop: SPACING , marginHorizontal: 2, marginBottom: 2 }}>
+      <View style={{ flex: 1, marginTop: SPACING , marginHorizontal: 2, marginBottom: 2 }}>
           {/* Simuler la légende */}
           <Text style={styles.legend}>LISTE DES LOGES</Text>
           {/* Simuler le fieldset */}
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     color: Colors.primary,
     textAlign: "right"

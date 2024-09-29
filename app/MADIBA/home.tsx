@@ -1,66 +1,70 @@
 import { Link } from "expo-router";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Spacing from "@/constants/Spacing";
 import { Colors } from "@/constants/Colors";
 import Font from "@/constants/Font";
 import FontSize from "@/constants/FontSize";
 
+const { width, height } = Dimensions.get('window'); // Obtenez la largeur et la hauteur de la fenêtre
+
+
 
 export default function HomePage() {
   return (
-
-
-    <LinearGradient
-      // Ces couleurs correspondent à ton dégradé CSS
-      colors={['rgba(2,0,36,1)', 'rgba(9,9,121,1)', 'rgba(0,212,255,1)']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.background}
-    >
-      <View style={styles.container}>
-        <Text style={styles.text}>BIENVENUE A LA FERME</Text>
-        <Text style={styles.text}>MADIBA</Text>
-        <Link href={"/MADIBA/loge"} style={{
-              marginHorizontal: 10,
-              padding: Spacing * 2,
-              backgroundColor: Colors.onPrimary,
-              marginVertical: Spacing,
-              borderRadius: Spacing,
-              shadowColor: Colors.primary,
-              shadowOffset: { width: 0, height: Spacing },
-              shadowOpacity: 0.3,
-              shadowRadius: Spacing,
-            }}><Text
-            style={{
-              fontFamily: Font["poppins-bold"],
-              color: Colors.primary,
-              textAlign: "center",
-              fontSize: FontSize.large,
-              padding: 15,
-            }}
-          >
-            Consulter les loges
-          </Text></Link>
-      </View>
-    </LinearGradient>
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/malimba-icon.png')} // Assurez-vous que le chemin est correct
+        style={styles.image} // Utilisez les styles définis ci-dessous
+        resizeMode="stretch" // Utilisez "cover" ou "contain" selon vos besoins
+      >
+        <View style={styles.overlay}>
+          <Link style={styles.link} href={"/MADIBA/loge"}>
+            <Text style={styles.text}>Consulter les loges</Text>
+          </Link>
+        </View>
+      </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
+    backgroundColor: 'black'
+  },
+  image: {
+    width: '100%', // Prendre toute la largeur de l'écran
+    height: height * 0.20, // Prendre toute la hauteur de l'écran
+    justifyContent: 'center', // Centrer le contenu si besoin
+    marginTop: 200
+  },
+  overlay: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    //backgroundColor: 'rgba(0, 0, 0, 0.2)', // Un overlay semi-transparent
+    position: 'absolute',
+    top: -150, // Ajustez cette valeur selon la distance par rapport au haut de l'écran
+    left: 0,
+    right: 0,
+    //alignItems: 'center', // Centrer horizontalement
+    zIndex: 1, // S'assurer que le bouton reste au-dessus des autres éléments si nécessaire
+  },
+  link: {
+    padding: Spacing * 2,
+    backgroundColor: "#009FFF",
+    borderRadius: Spacing,
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: Spacing },
+    shadowOpacity: 0.3,
+    shadowRadius: Spacing,
   },
   text: {
-    fontSize: 24,
-    color: '#fff',    // Couleur blanche pour contraster avec le dégradé
-    fontWeight: 'bold',
+    fontFamily: Font["poppins-bold"],
+    color: 'white',
+    textAlign: "center",
+    fontSize: FontSize.large,
+    padding: 15,
   },
 });

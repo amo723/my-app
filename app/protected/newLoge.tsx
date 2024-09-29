@@ -30,6 +30,31 @@ export default function NewTypeLoge() {
   const [type, setType] = useState("");
   const [libelle, setLibelle] = useState("");
   const [isSelected, setIsSelected] = useState(false);
+  const [nbre_male, setNbreMale] = useState<any | ''>('');
+  const [nbre_femelle, setNbreFemelle] = useState<any | ''>('');
+
+  const itemsMales = [
+    { id: "0", label: "1", value: '0' },
+    { id: "1", label: "2", value: '1' },
+    { id: "2", label: "3", value: '2' },
+  ];
+
+  const itemsFemelles = [
+    { id: "0", label: "4", value: '0' },
+    { id: "1", label: "8", value: '1' },
+    { id: "2", label: "12", value: '2' },
+  ];
+
+
+  const handleMaleChange = (itemValue: any) => {
+    console.log(itemValue);
+    setNbreMale(itemValue);
+  };
+
+  const handleFemelleChange = (itemValue: any) => {
+    console.log(itemValue);
+    setNbreFemelle(itemValue);
+  };
 
   useEffect(() => {
     const types: Data[] = [];
@@ -107,6 +132,8 @@ export default function NewTypeLoge() {
       .post(`loge/new`, {
         typeLoge: type,
         libelle: libelle,
+        nbre_male: nbre_male,
+        nbre_femelle: nbre_femelle,
         active: isSelected,
         date_activation_desactivation: new Date(),
       })
@@ -141,7 +168,7 @@ export default function NewTypeLoge() {
               Nouvelle loge 
             </Text>
           </View>
-          <View style={{ flex: 1, justifyContent: "center" }}>
+          <View>
             <Text style={{ marginTop: 20, fontWeight: 700, fontSize: 16 }}>
               Type de loge
             </Text>
@@ -152,7 +179,7 @@ export default function NewTypeLoge() {
             />
           </View>
           <View>
-            <Text style={{ marginTop: 60, fontWeight: 700, fontSize: 16 }}>
+            <Text style={{ marginTop: 5, fontWeight: 700, fontSize: 16 }}>
               Libellé
             </Text>
             <AppTextInput
@@ -160,8 +187,45 @@ export default function NewTypeLoge() {
               onChangeText={setLibelle}
               placeholder="Saisir le libelle"
             />
-            <View
+            <View>
+              <Text
+                style={{
+                  fontFamily: Font["poppins-bold"],
+                  marginVertical: 5,
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+              >
+                Nombre de males
+              </Text>
+
+            <AppSelectComponent
+              data={itemsMales}
+              selectedValue={nbre_male}
+              onValueChange={handleMaleChange}
+            />
+          </View>
+          <View>
+              <Text
+                style={{
+                  fontFamily: Font["poppins-bold"],
+                  marginVertical: 5,
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+              >
+                Nombre de femelles
+              </Text>
+
+            <AppSelectComponent
+              data={itemsFemelles}
+              selectedValue={nbre_femelle}
+              onValueChange={handleFemelleChange}
+            />
+          </View>
+          <View
               style={{
+                marginVertical: 5,
                 flexDirection: "row",
                 justifyContent: "flex-start",
               }}

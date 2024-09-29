@@ -23,15 +23,24 @@ interface Data {
   value: string;
 }
 
+
 export default function NewRecolte() {
   const [surface, setSurface] = useState("");
   const [capaciteMax, setCapaciteMax] = useState("");
 
   const [data, setData] = useState<Data[]>([]);
   const [idLoge, setIdLoge] = useState("");
+  const [anomalie, setAnomalie] = useState<string | "">("");
   const [nbrePonte, setNbrePonte] = useState("");
   const [obs, setObs] = useState("");
   const [isSelected, setIsSelected] = useState(false);
+
+  const items = [
+    { id: "0", label: "Coque fissuree", value: "0" },
+    { id: "1", label: "Oeuf(s) mal forme(s)", value: "1" },
+    { id: "2", label: "Oeuf(s) anormalement gros", value: "2" },
+    { id: "3", label: "Oeuf(s) anormalement petit(s)", value: "3" },
+  ];
 
   useEffect(() => {
     const types: Data[] = [];
@@ -63,6 +72,11 @@ export default function NewRecolte() {
   const handleLogeChange = (itemValue: string) => {
     console.log(itemValue);
     setIdLoge(itemValue);
+  };
+
+  const handleAnomalieChange = (itemValue: string) => {
+    console.log(itemValue);
+    setAnomalie(itemValue);
   };
 
   const toggleCheckbox = () => {
@@ -134,6 +148,23 @@ export default function NewRecolte() {
               placeholder="Saisir le nombre de pontes"
               value={nbrePonte}
               onChangeText={setNbrePonte}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: Font["poppins-bold"],
+                marginVertical: 20,
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Anomalie
+            </Text>
+            <AppSelectComponent
+              data={items}
+              selectedValue={anomalie}
+              onValueChange={handleAnomalieChange}
             />
           </View>
           <View>

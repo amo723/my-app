@@ -16,7 +16,7 @@ export default function HomePage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FERME MADIBA</Text>
+      <Text style={styles.title}>FERME MALIMBA</Text>
       <Button title="Accéder" onPress={navigate} />
       {/*<Link href={"/(tabs)/home"} style={styles.link}>
         Go to Home Tab
