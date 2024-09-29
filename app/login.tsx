@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace("/protected/dashboard");
+      router.replace("/MADIBA/home");
     }
   }, [isAuthenticated]);
 
@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     const success = await login(username, password);
     if (success) {
-      router.replace("/protected/dashboard");
+      router.replace("/MADIBA/home");
     } else {
       Alert.alert("Erreur", "Nom d'utilisateur ou mot de passe incorrect");
     }
